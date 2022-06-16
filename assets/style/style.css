@@ -4,4 +4,21 @@
     Dynamic website that collects information from a form to generate a receipt.
 
     Daniela Onici Student ID# 8754297, 2022.06.12: Created 
-                                       2022.06.15: Finished */
+                                       2022.06.16: Finished */
+
+#boxes {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 0fr 0fr;
+  grid-gap: 90px;
+}
+#boxForm {
+  width: 400px;
+  height: 300px;
+  border: solid black;
+}
+#receipt {
+  width: 400px;
+  height: 300px;
+  border: solid black;
+}

@@ -5,44 +5,67 @@
     Dynamic website that collects information from a form to generate a receipt.
 
     Daniela Onici Student ID# 8754297, 2022.06.12: Created 
-                                       2022.06.15: Finished
+                                       2022.06.16: Finished
 -->
-
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <title></title>
-        <script src="./assets/js/script.js"></script>
-        <link rel="stylesheet" href="./assets/style/style.css">
-    </head>
-    <body>
-        <div id="boxForm">
-            <h1>Raising money for The Frontline Fund</h1>
-            <form>
-                <label for="name" id="name">Name:</label>
-                <input type="text" placeholder="Full Name"><br>
-                <label for="email" id="email">Email:</label>
-                <input type="email" placeholder="email@domain.com"><br>
-                <label for="creditCardNumber" id="creditCardNumber">Credit Card Number:</label>
-                <input type="text" placeholder="xxxx-xxxx-xxxx-xxxx"><br>
-                <label for="creditCardExpiryMonth" id="creditCardExpiryMonth">Credit Card Expiry Month:</label>
-                <input type="text" placeholder="MMM"><br>
-                <label for="creditCardExpiryYear" id="creditCardExpiryYear">Credit Card Expiry Year:</label>
-                <input type="text" placeholder="yyyy"><br>
-                <p>Buy generously</p>
-                <label for="water" id="water">Number of Water Bottles ($5)</label>
-                <input type="text" placeholder="10"><br>
-                <label for="caps" id="caps">Number of Caps ($20)</label>
-                <input type="text" placeholder="10"><br>
-                <label for="pens" id="pens">Number of Pens ($2)</label>
-                <input type="text" placeholder="10"><br>
-                <label for="candy" id="candy">Number of Candy Bags ($10)</label>
-                <input type="text" placeholder="10"><br>
-                <label for="cupcakes" id="cupcakes">Number of Cupcakes ($3)</label>
-                <input type="text" placeholder="10"><br><br>
-                <input type="button" value="Checkout" onsubmit="">
-            </form>
-        </div>
-    </body>
+  <head>
+    <title></title>
+    <script src="./assets/js/script.js"></script>
+    <link rel="stylesheet" href="./assets/style/style.css" />
+  </head>
+  <body>
+    <h1 id="title">Raising money for The Frontline Fund</h1>
+    <div id="boxes">
+      <div id="boxForm">
+        <form action="#"  onsubmit="generateReceipt(); return false">
+          <label>Name:</label>
+          <input type="text" id="fullName" placeholder="Full Name" /><br />
+          <label>Email:</label>
+          <input type="text" id="email" placeholder="email@domain.com" /><br />
+          <label>Credit Card Number:</label>
+          <input
+            type="text"
+            id="creditCardNumber"
+            placeholder="xxxx-xxxx-xxxx-xxxx"
+          /><br />
+          <label>Credit Card Expiry Month:</label>
+          <input
+            type="text"
+            id="creditCardExpiryMonth"
+            placeholder="MMM"
+          /><br />
+          <label>Credit Card Expiry Year:</label>
+          <input
+            type="text"
+            id="creditCardExpiryYear"
+            placeholder="yyyy"
+          /><br />
+          <p>Buy generously</p>
+          <label>Number of Water Bottles ($5)</label>
+          <input type="text" id="water" placeholder="10" /><br />
+          <label>Number of Caps ($20)</label>
+          <input type="text" id="caps" placeholder="10" /><br />
+          <label>Number of Pens ($2)</label>
+          <input type="text" id="pens" placeholder="10" /><br />
+          <label>Number of Candy Bags ($10)</label>
+          <input type="text" id="candy" placeholder="10" /><br />
+          <label>Number of Cupcakes ($3)</label>
+          <input type="text" id="cupcakes" placeholder="10" /><br /><br />
+          <input type="submit" />
+        </form>
+      </div>
+      <div id="receipt">
+        <p id="titleReceipt">Receipt</p>
+        <p id="name"></p>
+        <p id="email"></p>
+        <p id="creditCard"></p>
+        <table id="table"></table>
+        <p id="donation"></p>
+        <p id="finalPrice"></p>
+      </div>
+    </div>
+    <p id="errorMessage"></p>
+  </body>
 </html>
