@@ -52,9 +52,10 @@ function generateReceipt() {
       "Invalid Credit Card number. Please follow the format XXXX-XXXX-XXXX-XXXX"
     );
   } else {
+    var newNumber = creditCardNumber.slice(-4);
     var txtCreditCard = document.getElementById("creditCardReceipt");
     var txt2 = document.createTextNode(
-      "Credit Card Number: " + creditCardNumber
+      "Credit Card Number: XXXX-XXXX-XXXX-" + newNumber
     );
     txtCreditCard.appendChild(txt2);
   }
