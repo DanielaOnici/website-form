@@ -26,8 +26,8 @@ function generateReceipt() {
   var pens = document.getElementById("pens").value;
   var candy = document.getElementById("candy").value;
   var cupcakes = document.getElementById("cupcakes").value;
-  console.log(errors);
-  //Validating name to include it in the receipt
+
+  //Validating name to include it in the receipt. If false, an error message is included in the errors array
   if (!validateName(name)) {
     errors.push(
       "Invalid name. Numbers and special characters are not allowed."
@@ -37,7 +37,7 @@ function generateReceipt() {
     var txt = document.createTextNode("Name: " + name);
     txtName.appendChild(txt);
   }
-  //Validating the email to include it in the receipt
+  //Validating the email to include it in the receipt. If false, an error message is included in the errors array
   if (!validateEmail(email)) {
     errors.push("Invalid email address.");
   } else {
@@ -46,7 +46,7 @@ function generateReceipt() {
     txtEmail.appendChild(txt1);
   }
 
-  //Validating the Credit Card number to include it in the receipt
+  //Validating the Credit Card number to include it in the receipt. If false, an error message is included in the errors array
   if (!validateCreditCard(creditCardNumber)) {
     errors.push(
       "Invalid Credit Card number. Please follow the format XXXX-XXXX-XXXX-XXXX"
@@ -59,25 +59,82 @@ function generateReceipt() {
     txtCreditCard.appendChild(txt2);
   }
 
-  //Validating the expiry month of the credit card
+  //Validating the expiry month of the credit card. If false, an error message is included in the errors array
   if (!validateExpiryMonth(expiryMonth)) {
     errors.push(
       "Invalid Month. Please follow the format i.e. NOV. It is case sensitive."
     );
   }
 
-  //Validating the year of the credit card
+  //Validating the year of the credit card. If false, an error message is included in the errors array
   if (!validateYear(expiryYear)) {
     errors.push(
       "Invalid Year. Please input numbers in the format i.e. 2022. Accepts only current year or future."
     );
   }
 
-  console.log(errors);
-  for (var j = 0; j < errors.length; j++) {
-    var txtErrors = document.getElementById("errorMessage");
-    var txt3 = document.createTextNode(errors[j] + "\n");
-    txtErrors.appendChild(txt3);
+  if ((water == null) | (water == "")) {
+    water = null;
+  } else {
+    if (!validateQuantities(water)) {
+      errors.push("Invalid quantity of water. Please insert only numbers.");
+    } else {
+      cartItem.push("Water");
+      cartQuantity.push(water);
+      cartUnit.push("$5");
+      cartTotal.push(water * 5);
+    }
+  }
+  if ((caps == null) | (caps == "")) {
+    caps = null;
+  } else {
+    if (!validateQuantities(caps)) {
+      errors.push("Invalid quantity of caps. Please insert only numbers.");
+    } else {
+      cartItem.push("Caps");
+      cartQuantity.push(caps);
+      cartUnit.push("$20");
+      cartTotal.push(caps * 20);
+    }
+  }
+
+  if ((pens == null) | (pens == "")) {
+    pens = null;
+  } else {
+    if (!validateQuantities(pens)) {
+      errors.push("Invalid quantity of pens. Please insert only numbers.");
+    } else {
+      cartItem.push("Pens");
+      cartQuantity.push(pens);
+      cartUnit.push("$2");
+      cartTotal.push(pens * 2);
+    }
+  }
+
+  if ((candy == null) | (candy == "")) {
+    candy = null;
+  } else {
+    if (!validateQuantities(candy)) {
+      errors.push("Invalid quantity of candy. Please insert only numbers.");
+    } else {
+      cartItem.push("Candy Bag");
+      cartQuantity.push(candy);
+      cartUnit.push("$10");
+      cartTotal.push(pens * 10);
+    }
+  }
+
+  if ((cupcakes == null) | (cupcakes == "")) {
+    cupcakes = null;
+  } else {
+    if (!validateQuantities(cupcakes)) {
+      errors.push("Invalid quantity of cupcakes. Please insert only numbers.");
+    } else {
+      cartItem.push("Cupcakes");
+      cartQuantity.push(cupcakes);
+      cartUnit.push("$3");
+      cartTotal.push(pens * 3);
+    }
   }
 
   //Including a table into HTML <table id='table'>
@@ -87,16 +144,16 @@ function generateReceipt() {
   var rowTitleEl = tableEl.insertRow(0);
 
   //creating the cells of the table (Columns: Item, Quantity, Unit Price and Total)
-  var cellTotalEl = rowTitleEl.insertCell(0);
-  var cellUnitEl = rowTitleEl.insertCell(1);
-  var cellQuantityEl = rowTitleEl.insertCell(2);
-  var cellItemEl = rowTitleEl.insertCell(3);
+  var cellItemEl = rowTitleEl.insertCell(0);
+  var cellQuantityEl = rowTitleEl.insertCell(1);
+  var cellUnitEl = rowTitleEl.insertCell(2);
+  var cellTotalEl = rowTitleEl.insertCell(3);
 
   //Including the text (Columns: Item, Quantity, Unit Price and Total) to the cells
-  cellTotalEl.innerHTML = "Total";
-  cellUnitEl.innerHTML = "Unit Price";
-  cellQuantityEl.innerHTML = "Quantity";
   cellItemEl.innerHTML = "Item";
+  cellQuantityEl.innerHTML = "Quantity";
+  cellUnitEl.innerHTML = "Unit Price";
+  cellTotalEl.innerHTML = "Total";
 
   var rowEl;
 
@@ -106,19 +163,19 @@ function generateReceipt() {
     rowEl = tableEl.insertRow(i + 1);
 
     //Including the items selected by the user into the table
-    cellTotalEl = rowEl.insertCell(0);
-    cellUnitEl = rowEl.insertCell(1);
-    cellQuantityEl = rowEl.insertCell(2);
-    cellItemEl = rowEl.insertCell(3);
+    cellItemEl = rowEl.insertCell(0);
+    cellQuantityEl = rowEl.insertCell(1);
+    cellUnitEl = rowEl.insertCell(2);
+    cellTotalEl = rowEl.insertCell(3);
 
     //Including the items selected by the user into the table in HTML
-    cellTotalEl.innerHTML = `${cartTotal[i]}`;
-    cellUnitEl.innerHTML = `${cartUnit[i]}`;
-    cellQuantityEl.innerHTML = `${cartQuantity[i]}`;
     cellItemEl.innerHTML = `${cartItem[i]}`;
+    cellQuantityEl.innerHTML = `${cartQuantity[i]}`;
+    cellUnitEl.innerHTML = `${cartUnit[i]}`;
+    cellTotalEl.innerHTML = `${cartTotal[i]}`;
   }
 
-  //Creating variables with the sum of prices
+  //Creating variable with the sum of prices
   var priceSum = total(cartTotal);
 
   //Calculating the quantity of donation
@@ -131,17 +188,30 @@ function generateReceipt() {
   }
 
   var finalPrice = Math.round(priceSum + donation);
+  if (cartQuantity == 0) {
+    errors.push("At least one item should be purchased.");
+  } else {
+    //Including the text into the tags <p id='donation'> and <p id='finalPrice'
+    var txtDonation = document.getElementById("donation");
+    var txtFinalPrice = document.getElementById("finalPrice");
+    var text1 = document.createTextNode("Donation: $" + donation);
+    var text2 = document.createTextNode("Final Price: $" + finalPrice);
 
-  //Including the text into the tags <p id='donation'> and <p id='finalPrice'
-  var txtDonation = document.getElementById("donation");
-  var txtFinalPrice = document.getElementById("finalPrice");
-  var text1 = document.createTextNode("Donation: $" + donation);
-  var text2 = document.createTextNode("Final Price: $" + finalPrice);
+    txtDonation.appendChild(text1);
+    txtFinalPrice.appendChild(text2);
+  }
 
-  txtDonation.appendChild(text1);
-  txtFinalPrice.appendChild(text2);
+  //Creating a loop to read all the error inside the errors array
+  for (var j = 0; j < errors.length; j++) {
+    var txtErrors = document.getElementById("errorMessage");
+    var txt3 = document.createTextNode(errors[j]);
+    var br = document.createElement("br");
+    txtErrors.appendChild(txt3);
+    txtErrors.appendChild(br);
+  }
 }
 
+//Validating the name with regular expression (accepting only letters)
 function validateName(name) {
   var trimmedName = name.trim();
   var regName = /^[a-zA-Z]*[a-zA-Z]+$/;
@@ -153,6 +223,7 @@ function validateName(name) {
   }
 }
 
+//Validating the email with regular expression (accepting some special characters before '@')
 function validateEmail(email) {
   var trimmedEmail = email.trim();
   var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -164,6 +235,7 @@ function validateEmail(email) {
   }
 }
 
+//Validating the credit card number with regular expression (accepting only numbers with the format XXXX-XXXX-XXXX-XXXX)
 function validateCreditCard(creditCardNumber) {
   var trimmedNumber = creditCardNumber.trim();
   var regCreditCardNumber = /^(\d{4})\-(\d{4})\-(\d{4})\-(\d{4})$/;
@@ -175,6 +247,7 @@ function validateCreditCard(creditCardNumber) {
   }
 }
 
+//Validating the expiry month with regular expression (accepting only in the format MMM)
 function validateExpiryMonth(expiryMonth) {
   var trimmedMonth = expiryMonth.trim();
   var regExpiryMonth = /^(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)$/;
@@ -186,6 +259,7 @@ function validateExpiryMonth(expiryMonth) {
   }
 }
 
+//Validating the year of the card (accepting only years in the format yyyy equals the current year or future)
 function validateYear(year) {
   var year = year.trim();
   var inputYear = parseInt(year);
@@ -199,24 +273,19 @@ function validateYear(year) {
   }
 }
 
+//Validating the input quantity (accepting only numbers greater than 0)
 function validateQuantities(quantity) {
   var trimmedQuantity = quantity.trim();
   var inputQuantity = parseInt(trimmedQuantity);
 
-  if (isFinite(inputQuantity) | (inputQuantity > 0)) {
+  if (!isFinite(inputQuantity) | inputQuantity > 0) {
     return true;
   } else {
-    var txtError = document.getElementById("errorMessage");
-    var txt = document.createTextNode(
-      "Invalid quantity. Please input only numbers greather than 0"
-    );
-    txtError.appendChild(txt);
     return false;
   }
 }
 
-//Creating a funtion to calculate the values into the array of cartPrices
-//Each value added to the array is the product of quantity of cake by its price
+//Creating a funtion to calculate the values into the array of cartTotal
 function total(price) {
   var total = 0;
 
