@@ -12,35 +12,48 @@
 <html>
   <head>
     <title></title>
-    <script src="./assets/js/script.js"></script>
+    <script src="./assets/js/script.js" ></script>
     <link rel="stylesheet" href="./assets/style/style.css" />
   </head>
   <body>
     <h1 id="title">Raising money for The Frontline Fund</h1>
     <div id="boxes">
       <div id="boxForm">
-        <form action="#"  onsubmit="generateReceipt(); return false">
+        <form action="#" onsubmit="generateReceipt(); return false">
           <label>Name:</label>
-          <input type="text" id="fullName" placeholder="Full Name" /><br />
+          <input
+            type="text"
+            id="fullName"
+            placeholder="Full Name"
+            required
+          /><br />
           <label>Email:</label>
-          <input type="text" id="email" placeholder="email@domain.com" /><br />
+          <input
+            type="text"
+            id="email"
+            placeholder="email@domain.com"
+            required
+          /><br />
           <label>Credit Card Number:</label>
           <input
             type="text"
             id="creditCardNumber"
             placeholder="xxxx-xxxx-xxxx-xxxx"
+            required
           /><br />
           <label>Credit Card Expiry Month:</label>
           <input
             type="text"
             id="creditCardExpiryMonth"
             placeholder="MMM"
+            required
           /><br />
           <label>Credit Card Expiry Year:</label>
           <input
             type="text"
             id="creditCardExpiryYear"
             placeholder="yyyy"
+            required
           /><br />
           <p>Buy generously</p>
           <label>Number of Water Bottles ($5)</label>
@@ -58,9 +71,9 @@
       </div>
       <div id="receipt">
         <p id="titleReceipt">Receipt</p>
-        <p id="name"></p>
-        <p id="email"></p>
-        <p id="creditCard"></p>
+        <p id="nameReceipt"></p>
+        <p id="emailReceipt"></p>
+        <p id="creditCardReceipt"></p>
         <table id="table"></table>
         <p id="donation"></p>
         <p id="finalPrice"></p>

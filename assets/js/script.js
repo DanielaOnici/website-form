@@ -11,6 +11,7 @@ let cartTotal = [];
 let cartUnit = [];
 let cartQuantity = [];
 let cartItem = [];
+let errors = [];
 
 //Creating a function that generates the table receipt with the user's information, items chosen and total price of the purchase
 function generateReceipt() {
@@ -25,28 +26,59 @@ function generateReceipt() {
   var pens = document.getElementById("pens").value;
   var candy = document.getElementById("candy").value;
   var cupcakes = document.getElementById("cupcakes").value;
-
-  //Validating name to include in the receipt
+  console.log(errors);
+  //Validating name to include it in the receipt
   if (!validateName(name)) {
-    return;
+    errors.push(
+      "Invalid name. Numbers and special characters are not allowed."
+    );
+  } else {
+    var txtName = document.getElementById("nameReceipt");
+    var txt = document.createTextNode("Name: " + name);
+    txtName.appendChild(txt);
   }
-  var txtName = document.getElementById("name");
-  var txt = document.createTextNode("Name: " + name);
-  txtName.appendChild(txt);
-
+  //Validating the email to include it in the receipt
   if (!validateEmail(email)) {
-    return;
+    errors.push("Invalid email address.");
+  } else {
+    var txtEmail = document.getElementById("emailReceipt");
+    var txt1 = document.createTextNode("Email: " + email);
+    txtEmail.appendChild(txt1);
   }
-  var txtEmail = document.getElementById("email");
-  var txt1 = document.createTextNode("Email: " + email);
-  txtEmail.appendChild(txt1);
 
+  //Validating the Credit Card number to include it in the receipt
   if (!validateCreditCard(creditCardNumber)) {
-    return;
+    errors.push(
+      "Invalid Credit Card number. Please follow the format XXXX-XXXX-XXXX-XXXX"
+    );
+  } else {
+    var txtCreditCard = document.getElementById("creditCardReceipt");
+    var txt2 = document.createTextNode(
+      "Credit Card Number: " + creditCardNumber
+    );
+    txtCreditCard.appendChild(txt2);
   }
-  var txtCreditCard = document.getElementById("creditCardNumber");
-  var txt2 = document.createTextNode("Credit Card Number: " + creditCardNumber);
-  txtCreditCard.appendChild(txt2);
+
+  //Validating the expiry month of the credit card
+  if (!validateExpiryMonth(expiryMonth)) {
+    errors.push(
+      "Invalid Month. Please follow the format i.e. NOV. It is case sensitive."
+    );
+  }
+
+  //Validating the year of the credit card
+  if (!validateYear(expiryYear)) {
+    errors.push(
+      "Invalid Year. Please input numbers in the format i.e. 2022. Accepts only current year or future."
+    );
+  }
+
+  console.log(errors);
+  for (var j = 0; j < errors.length; j++) {
+    var txtErrors = document.getElementById("errorMessage");
+    var txt3 = document.createTextNode(errors[j] + "\n");
+    txtErrors.appendChild(txt3);
+  }
 
   //Including a table into HTML <table id='table'>
   var tableEl = document.getElementById("table");
@@ -101,7 +133,7 @@ function generateReceipt() {
   var finalPrice = Math.round(priceSum + donation);
 
   //Including the text into the tags <p id='donation'> and <p id='finalPrice'
-  var txtDonation = document.getElementById("doantion");
+  var txtDonation = document.getElementById("donation");
   var txtFinalPrice = document.getElementById("finalPrice");
   var text1 = document.createTextNode("Donation: $" + donation);
   var text2 = document.createTextNode("Final Price: $" + finalPrice);
@@ -111,61 +143,45 @@ function generateReceipt() {
 }
 
 function validateName(name) {
+  var trimmedName = name.trim();
   var regName = /^[a-zA-Z]*[a-zA-Z]+$/;
 
-  if (regName.test(name)) {
+  if (regName.test(trimmedName)) {
     return true;
   } else {
-    var txtError = document.getElementById("errorMessage");
-    var txt = document.createTextNode(
-      "Invalid name. Numbers and special characters are not allowed."
-    );
-    txtError.appendChild(txt);
     return false;
   }
 }
 
 function validateEmail(email) {
+  var trimmedEmail = email.trim();
   var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-  if (regEmail.test(email)) {
+  if (regEmail.test(trimmedEmail)) {
     return true;
   } else {
-    var txtError = document.getElementById("errorMessage");
-    var txt = document.createTextNode("Invalid email address.");
-    txtError.appendChild(txt);
     return false;
   }
 }
 
 function validateCreditCard(creditCardNumber) {
-  var creditCardNumber = creditCardNumber.trim();
-  var regCreditCardNumber = /^[0-9]{4}\-[0-9]{4}\-[0-9]{4}$/;
+  var trimmedNumber = creditCardNumber.trim();
+  var regCreditCardNumber = /^(\d{4})\-(\d{4})\-(\d{4})\-(\d{4})$/;
 
-  if (regCreditCardNumber.test(creditCardNumber)) {
+  if (regCreditCardNumber.test(trimmedNumber)) {
     return true;
   } else {
-    var txtError = document.getElementById("errorMessage");
-    var txt = document.createTextNode(
-      "Invalid Credit Card number. Please follow the format XXXX-XXXX-XXXX-XXXX"
-    );
-    txtError.appendChild(txt);
     return false;
   }
 }
 
 function validateExpiryMonth(expiryMonth) {
-  var expiryMonth = expiryMonth.trim();
+  var trimmedMonth = expiryMonth.trim();
   var regExpiryMonth = /^(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)$/;
 
-  if (regExpiryMonth.test(expiryMonth)) {
+  if (regExpiryMonth.test(trimmedMonth)) {
     return true;
   } else {
-    var txtError = document.getElementById("errorMessage");
-    var txt = document.createTextNode(
-      "Invalid Month. Please follow the format i.e. NOV"
-    );
-    txtError.appendChild(txt);
     return false;
   }
 }
@@ -174,25 +190,20 @@ function validateYear(year) {
   var year = year.trim();
   var inputYear = parseInt(year);
   const currentDate = new Date();
-  const currentYear = currentYear.getFullYear();
+  const currentYear = currentDate.getFullYear();
 
   if (inputYear >= currentYear) {
     return true;
   } else {
-    var txtError = document.getElementById("errorMessage");
-    var txt = document.createTextNode(
-      "Invalid Year. Please input numbers in the format i.e. 2021. Accepts only current year or future."
-    );
-    txtError.appendChild(txt);
     return false;
   }
 }
 
 function validateQuantities(quantity) {
-  var quantity = quantity.trim();
-  var inputQuantity = parseInt(quantity);
+  var trimmedQuantity = quantity.trim();
+  var inputQuantity = parseInt(trimmedQuantity);
 
-  if (isFinite(quantity) | (quantity > 0)) {
+  if (isFinite(inputQuantity) | (inputQuantity > 0)) {
     return true;
   } else {
     var txtError = document.getElementById("errorMessage");
