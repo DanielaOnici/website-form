@@ -151,7 +151,7 @@ function generateReceipt() {
   }
 
   var finalPrice = Math.round(priceSum + donation);
-  if (cartQuantity == 0) {
+  if (cartQuantity == 0 || !validateName(name) && !validateEmail(email) && !validateCreditCard(creditCardNumber) && !validateExpiryMonth(expiryMonth) && !validateYear(expiryYear)) {
     errors.push("At least one item should be purchased.");
   } else {
     //Including a table into HTML <table id='table'>
