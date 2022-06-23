@@ -70,7 +70,7 @@ function generateReceipt() {
   //Validating the year of the credit card. If false, an error message is included in the errors array
   if (!validateYear(expiryYear)) {
     errors.push(
-      "Invalid Year. Please input numbers in the format i.e. 2022. Accepts only current year or future."
+      "Invalid Year. Please input numbers in the format e.g. 2022. Accepts only current year or future."
     );
   }
 
@@ -138,44 +138,6 @@ function generateReceipt() {
     }
   }
 
-  //Including a table into HTML <table id='table'>
-  var tableEl = document.getElementById("table");
-
-  //Creating the head of the table
-  var rowTitleEl = tableEl.insertRow(0);
-
-  //creating the cells of the table (Columns: Item, Quantity, Unit Price and Total)
-  var cellItemEl = rowTitleEl.insertCell(0);
-  var cellQuantityEl = rowTitleEl.insertCell(1);
-  var cellUnitEl = rowTitleEl.insertCell(2);
-  var cellTotalEl = rowTitleEl.insertCell(3);
-
-  //Including the text (Columns: Item, Quantity, Unit Price and Total) to the cells
-  cellItemEl.innerHTML = "Item";
-  cellQuantityEl.innerHTML = "Quantity";
-  cellUnitEl.innerHTML = "Unit Price";
-  cellTotalEl.innerHTML = "Total";
-
-  var rowEl;
-
-  //Creating a loop to include more rows and the items that were selected by the user
-  for (var i = 0; i < cartQuantity.length; i++) {
-    //Creating rows below the head title of the table
-    rowEl = tableEl.insertRow(i + 1);
-
-    //Including the items selected by the user into the table
-    cellItemEl = rowEl.insertCell(0);
-    cellQuantityEl = rowEl.insertCell(1);
-    cellUnitEl = rowEl.insertCell(2);
-    cellTotalEl = rowEl.insertCell(3);
-
-    //Including the items selected by the user into the table in HTML
-    cellItemEl.innerHTML = `${cartItem[i]}`;
-    cellQuantityEl.innerHTML = `${cartQuantity[i]}`;
-    cellUnitEl.innerHTML = `${cartUnit[i]}`;
-    cellTotalEl.innerHTML = `${cartTotal[i]}`;
-  }
-
   //Creating variable with the sum of prices
   var priceSum = total(cartTotal);
 
@@ -192,6 +154,44 @@ function generateReceipt() {
   if (cartQuantity == 0) {
     errors.push("At least one item should be purchased.");
   } else {
+    //Including a table into HTML <table id='table'>
+    var tableEl = document.getElementById("table");
+
+    //Creating the head of the table
+    var rowTitleEl = tableEl.insertRow(0);
+
+    //creating the cells of the table (Columns: Item, Quantity, Unit Price and Total)
+    var cellItemEl = rowTitleEl.insertCell(0);
+    var cellQuantityEl = rowTitleEl.insertCell(1);
+    var cellUnitEl = rowTitleEl.insertCell(2);
+    var cellTotalEl = rowTitleEl.insertCell(3);
+
+    //Including the text (Columns: Item, Quantity, Unit Price and Total) to the cells
+    cellItemEl.innerHTML = "Item";
+    cellQuantityEl.innerHTML = "Quantity";
+    cellUnitEl.innerHTML = "Unit Price";
+    cellTotalEl.innerHTML = "Total";
+
+    var rowEl;
+
+    //Creating a loop to include more rows and the items that were selected by the user
+    for (var i = 0; i < cartQuantity.length; i++) {
+      //Creating rows below the head title of the table
+      rowEl = tableEl.insertRow(i + 1);
+
+      //Including the items selected by the user into the table
+      cellItemEl = rowEl.insertCell(0);
+      cellQuantityEl = rowEl.insertCell(1);
+      cellUnitEl = rowEl.insertCell(2);
+      cellTotalEl = rowEl.insertCell(3);
+
+      //Including the items selected by the user into the table in HTML
+      cellItemEl.innerHTML = `${cartItem[i]}`;
+      cellQuantityEl.innerHTML = `${cartQuantity[i]}`;
+      cellUnitEl.innerHTML = `${cartUnit[i]}`;
+      cellTotalEl.innerHTML = `${cartTotal[i]}`;
+    }
+
     //Including the text into the tags <p id='donation'> and <p id='finalPrice'
     var txtDonation = document.getElementById("donation");
     var txtFinalPrice = document.getElementById("finalPrice");
@@ -215,7 +215,7 @@ function generateReceipt() {
 //Validating the name with regular expression (accepting only letters)
 function validateName(name) {
   var trimmedName = name.trim();
-  var regName = /^[a-zA-Z]*[a-zA-Z]+$/;
+  var regName = /^[a-zA-Z]*\s?[a-zA-Z]*$/;
 
   if (regName.test(trimmedName)) {
     return true;
@@ -279,7 +279,7 @@ function validateQuantities(quantity) {
   var trimmedQuantity = quantity.trim();
   var inputQuantity = parseInt(trimmedQuantity);
 
-  if (!isFinite(inputQuantity) | inputQuantity > 0) {
+  if (!isFinite(inputQuantity) | (inputQuantity > 0)) {
     return true;
   } else {
     return false;

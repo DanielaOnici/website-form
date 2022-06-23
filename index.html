@@ -24,7 +24,7 @@
           <input
             type="text"
             id="fullName"
-            placeholder="Full Name"
+            placeholder="Enter your full Name"
             required
           /><br /><br />
           <label>Email:</label>
@@ -56,16 +56,20 @@
             required
           /><br /><br /><br />
           <label>Number of Water Bottles ($5)</label>
-          <input type="text" id="water" placeholder="10" /><br /><br />
+          <input type="text" id="water" placeholder="E.g. 10" /><br /><br />
           <label>Number of Caps ($20)</label>
-          <input type="text" id="caps" placeholder="10" /><br /><br />
+          <input type="text" id="caps" placeholder="E.g. 10" /><br /><br />
           <label>Number of Pens ($2)</label>
-          <input type="text" id="pens" placeholder="10" /><br /><br />
+          <input type="text" id="pens" placeholder="E.g. 10" /><br /><br />
           <label>Number of Candy Bags ($10)</label>
-          <input type="text" id="candy" placeholder="10" /><br /><br />
+          <input type="text" id="candy" placeholder="E.g. 10" /><br /><br />
           <label>Number of Cupcakes ($3)</label>
-          <input type="text" id="cupcakes" placeholder="10" /><br /><br /><br />
-          <input type="submit" value="Checkout"/>
+          <input
+            type="text"
+            id="cupcakes"
+            placeholder="E.g. 10"
+          /><br /><br /><br />
+          <input type="submit" value="Checkout" />
         </form>
       </div>
       <div id="receipt">
@@ -78,6 +82,7 @@
         <p id="finalPrice"></p>
       </div>
     </div>
+    <br />
     <p id="errorMessage"></p>
   </body>
 </html>
